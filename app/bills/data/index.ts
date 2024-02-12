@@ -9,31 +9,51 @@ export type Bill = {
   sponsorId: string;
 };
 
-export type ListBillsOptions = {
+export type FindBillsOptions = {
   limit?: number;
   offset?: number;
 };
 
-export async function listBills(
-  options: ListBillsOptions = {},
+export async function findBills(
+  options: FindBillsOptions = {},
 ): Promise<Array<Bill>> {
   const { limit = Infinity, offset = 0 } = options;
   const from = offset + 1;
   const to = Number.isInteger(limit) ? offset + limit : undefined;
   const parser = buildParser({ from, to });
-  const bills: Array<Bill> = [];
+  const result: Array<Bill> = [];
   for await (const bill of parser) {
-    bills.push(bill);
+    result.push(bill);
   }
-  return bills;
+  return result;
 }
 
-export async function retrieveBill(id: string): Promise<Bill | undefined> {
+export async function findBillsByIds(
+  ids: Iterable<Bill['id']>,
+): Promise<Array<Bill>> {
   const parser = buildParser();
+  const result: Array<Bill> = [];
+  const idsArr = Array.from(ids);
   for await (const bill of parser) {
-    if (bill.id === id) return bill;
+    if (idsArr.includes(bill.id)) {
+      result.push(bill);
+    }
   }
-  return undefined;
+  return result;
+}
+
+export async function findBillsBySponsorIds(
+  sponsorIds: Iterable<Bill['sponsorId']>,
+): Promise<Array<Bill>> {
+  const parser = buildParser();
+  const result: Array<Bill> = [];
+  const sponsorIdsArr = Array.from(sponsorIds);
+  for await (const bill of parser) {
+    if (sponsorIdsArr.includes(bill.sponsorId)) {
+      result.push(bill);
+    }
+  }
+  return result;
 }
 
 function buildParser(options: ParseOptions = {}): Parser {

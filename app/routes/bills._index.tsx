@@ -1,13 +1,13 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { Link, json, useLoaderData, useSearchParams } from '@remix-run/react';
 import { BillCard } from '~/bills/components/bill-card';
-import { listBills } from '~/bills/data';
+import { findBills } from '~/bills/data';
 import { Button } from '~/commons/components/button';
 import { Paginator } from '~/commons/components/paginator';
 import { useOutletContext } from '~/commons/utils/context';
 import { getIntl } from '~/commons/utils/intl';
 import { IntSearchParamParser } from '~/commons/utils/searchParams';
-import { retrieveLegislator } from '~/legislators/data';
+import { findLegislatorsByIds } from '~/legislators/data';
 
 const pageParser = new IntSearchParamParser(1);
 
@@ -16,10 +16,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const page = pageParser.fromSearchParam(url.searchParams.get('page'));
   const limit = 5;
   const offset = (page - 1) * limit;
-  const bills = await listBills({ offset, limit });
-  const sponsors = await Promise.all(
-    bills.map((bill) => retrieveLegislator(bill.sponsorId)),
-  );
+  const bills = await findBills({ offset, limit });
+  const sponsorsIds = new Set(bills.map((bill) => bill.sponsorId));
+  const sponsors = await findLegislatorsByIds(sponsorsIds);
   return json({ page, limit, offset, bills, sponsors });
 };
 
@@ -46,11 +45,18 @@ export default function Bills() {
           {intl.formatMessage({ id: 'Bills' })}
         </h2>
         <div className="flex flex-col gap-4 md:gap-6" role="list">
-          {bills.map((bill, index) => {
-            const sponsor = sponsors.at(index);
+          {bills.map((bill) => {
+            const sponsor = sponsors.find((s) => s.id === bill.sponsorId);
             return (
               <Link key={bill.id} to={`/bill/${bill.id}`}>
-                <BillCard role="listitem" bill={bill} sponsor={sponsor} />
+                <BillCard role="listitem" bill={bill}>
+                  {sponsor == null ? null : (
+                    <>
+                      {intl.formatMessage({ id: 'Sponsored by' })}{' '}
+                      {sponsor.name}
+                    </>
+                  )}
+                </BillCard>
               </Link>
             );
           })}
@@ -70,7 +76,7 @@ export default function Bills() {
         <Paginator
           page={page}
           onChange={handlePageChange}
-          disabled={bills.length < limit}
+          disabled={length < limit}
         />
       </section>
     </div>

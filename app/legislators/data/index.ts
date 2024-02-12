@@ -12,33 +12,37 @@ export type Legislator = {
   district: string;
 };
 
-export type ListLegislatorsOptions = {
+export type FindLegislatorsOptions = {
   limit?: number;
   offset?: number;
 };
 
-export async function listLegislators(
-  options: ListLegislatorsOptions = {},
+export async function findLegislators(
+  options: FindLegislatorsOptions = {},
 ): Promise<Array<Legislator>> {
   const { limit = Infinity, offset = 0 } = options;
   const from = offset + 1;
   const to = Number.isInteger(limit) ? offset + limit : undefined;
   const parser = buildParser({ from, to });
-  const legislators: Array<Legislator> = [];
+  const result: Array<Legislator> = [];
   for await (const legislator of parser) {
-    legislators.push(legislator);
+    result.push(legislator);
   }
-  return legislators;
+  return result;
 }
 
-export async function retrieveLegislator(
-  id: string,
-): Promise<Legislator | undefined> {
+export async function findLegislatorsByIds(
+  ids: Iterable<Legislator['id']>,
+): Promise<Array<Legislator>> {
   const parser = buildParser();
+  const result: Array<Legislator> = [];
+  const idsArr = Array.from(ids);
   for await (const legislator of parser) {
-    if (legislator.id === id) return legislator;
+    if (idsArr.includes(legislator.id)) {
+      result.push(legislator);
+    }
   }
-  return undefined;
+  return result;
 }
 
 function buildParser(options: ParseOptions = {}): Parser {

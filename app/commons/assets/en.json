@@ -12,14 +12,19 @@
   "Reload": "Reload",
   "Legislators": "Legislators",
   "Bills": "Bills",
+  "Votes": "Votes",
   "Latest Legislators": "Latest Legislators",
   "Latest Bills": "Latest Bills",
   "Rep.": "Rep.",
   "See all legislators": "See all legislators",
   "See all bills": "See all bills",
+  "On Vote": "On Vote",
+  "Sponsor": "Sponsor",
   "Sponsored by": "Sponsored by",
   "appName": "VoteWatch",
   "appDescription": "Watch the legislators and their votes on bills",
   "legislatorsList.empty": "No other legislators were found.",
-  "billsList.empty": "No other bills were found."
+  "billsList.empty": "No other bills were found.",
+  "sponsoredList.empty": "There are no sponsored bills.",
+  "voteList.empty": "There are no recorded vote results."
 }

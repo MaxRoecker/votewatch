@@ -1,20 +1,19 @@
 import { Link, json, useLoaderData } from '@remix-run/react';
 import { BillCard } from '~/bills/components/bill-card';
-import { listBills } from '~/bills/data';
+import { findBills } from '~/bills/data';
 import { Button } from '~/commons/components/button';
 import { useOutletContext } from '~/commons/utils/context';
 import { getIntl } from '~/commons/utils/intl';
 import { LegislatorCard } from '~/legislators/components/legislator-card';
-import { listLegislators, retrieveLegislator } from '~/legislators/data';
+import { findLegislators, findLegislatorsByIds } from '~/legislators/data';
 
 export const loader = async () => {
   const [legislators, bills] = await Promise.all([
-    listLegislators({ offset: 0, limit: 4 }),
-    listBills({ offset: 0, limit: 4 }),
+    findLegislators({ offset: 0, limit: 4 }),
+    findBills({ offset: 0, limit: 4 }),
   ]);
-  const sponsors = await Promise.all(
-    bills.map((bill) => retrieveLegislator(bill.sponsorId)),
-  );
+  const sponsorsIds = new Set(bills.map((bill) => bill.sponsorId));
+  const sponsors = await findLegislatorsByIds(sponsorsIds);
   return json({ legislators, bills, sponsors });
 };
 
@@ -50,11 +49,18 @@ export default function Index() {
           {intl.formatMessage({ id: 'Latest Bills' })}
         </h2>
         <div className="flex flex-col gap-4 md:gap-6" role="list">
-          {bills.map((bill, index) => {
-            const sponsor = sponsors.at(index);
+          {bills.map((bill) => {
+            const sponsor = sponsors.find((s) => s.id === bill.sponsorId);
             return (
               <Link key={bill.id} to={`/bills/${bill.id}`}>
-                <BillCard role="listitem" bill={bill} sponsor={sponsor} />
+                <BillCard role="listitem" bill={bill}>
+                  {sponsor == null ? null : (
+                    <>
+                      {intl.formatMessage({ id: 'Sponsored by' })}{' '}
+                      {sponsor.name}
+                    </>
+                  )}
+                </BillCard>
               </Link>
             );
           })}

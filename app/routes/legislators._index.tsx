@@ -6,7 +6,7 @@ import { useOutletContext } from '~/commons/utils/context';
 import { getIntl } from '~/commons/utils/intl';
 import { IntSearchParamParser } from '~/commons/utils/searchParams';
 import { LegislatorCard } from '~/legislators/components/legislator-card';
-import { listLegislators } from '~/legislators/data';
+import { findLegislators } from '~/legislators/data';
 
 const pageParser = new IntSearchParamParser(1);
 
@@ -15,7 +15,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const page = pageParser.fromSearchParam(url.searchParams.get('page'));
   const limit = 5;
   const offset = (page - 1) * limit;
-  const legislators = await listLegislators({ offset, limit });
+  const legislators = await findLegislators({ offset, limit });
   return json({ page, limit, offset, legislators });
 };
 
