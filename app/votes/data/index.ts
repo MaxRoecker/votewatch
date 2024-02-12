@@ -49,6 +49,20 @@ export async function findVoteByIds(
   return result;
 }
 
+export async function findVoteByBillIds(
+  billIds: Iterable<Vote['billId']>,
+): Promise<Array<Vote>> {
+  const parser = buildVoteParser();
+  const result: Array<Vote> = [];
+  const billIdsArr = Array.from(billIds);
+  for await (const vote of parser) {
+    if (billIdsArr.includes(vote.billId)) {
+      result.push(vote);
+    }
+  }
+  return result;
+}
+
 export async function findVoteResultsByVoteIds(
   voteIds: Iterable<VoteResult['voteId']>,
 ): Promise<Array<VoteResult>> {
@@ -56,7 +70,7 @@ export async function findVoteResultsByVoteIds(
   const voteIdsArr = Array.from(voteIds);
   const voteResults: Array<VoteResult> = [];
   for await (const voteResult of parser) {
-    if (voteIdsArr.includes(voteResult.id)) {
+    if (voteIdsArr.includes(voteResult.voteId)) {
       voteResults.push(voteResult);
     }
   }

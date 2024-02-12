@@ -48,7 +48,7 @@ export default function Bills() {
           {bills.map((bill) => {
             const sponsor = sponsors.find((s) => s.id === bill.sponsorId);
             return (
-              <Link key={bill.id} to={`/bill/${bill.id}`}>
+              <Link key={bill.id} to={`/bills/${bill.id}`}>
                 <BillCard role="listitem" bill={bill}>
                   {sponsor == null ? null : (
                     <>
@@ -76,7 +76,7 @@ export default function Bills() {
         <Paginator
           page={page}
           onChange={handlePageChange}
-          disabled={length < limit}
+          disabled={bills.length < limit}
         />
       </section>
     </div>
