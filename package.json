@@ -8,8 +8,10 @@
     "dev": "remix dev --manual",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/index.js",
-    "ignore-sync": "ignore-sync .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "e2e": "playwright test",
+    "e2e:report": "playwright show-report",
+    "ignore-sync": "ignore-sync ."
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.0.5",
@@ -33,6 +35,7 @@
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.41.2",
     "@remix-run/dev": "^2.6.0",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
