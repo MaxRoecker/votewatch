@@ -19,7 +19,12 @@ export const BillCard = forwardRef<HTMLDivElement, BillCardProps>(
   (props, ref) => {
     const { className, bill, children, ...rest } = props;
     return (
-      <Card ref={ref} className={cn(className)} {...rest}>
+      <Card
+        ref={ref}
+        className={cn(className)}
+        data-testid="bill-card"
+        {...rest}
+      >
         <CardHeader className="flex flex-row items-center gap-4">
           <Avatar className="shrink-0">
             <AvatarFallback>
@@ -27,7 +32,9 @@ export const BillCard = forwardRef<HTMLDivElement, BillCardProps>(
             </AvatarFallback>
           </Avatar>
           <div className="grow">
-            <CardTitle className="line-clamp-2">{bill.title}</CardTitle>
+            <CardTitle className="line-clamp-2" data-testid="bill-card-title">
+              {bill.title}
+            </CardTitle>
             <CardDescription className="truncate">{children}</CardDescription>
           </div>
         </CardHeader>
