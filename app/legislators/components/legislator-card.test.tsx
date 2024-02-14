@@ -1,18 +1,7 @@
 import type { Legislator } from '../data';
-import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import { render, screen } from '~/commons/utils/test-utils';
 import { LegislatorCard } from './legislator-card';
-// import { createRemixStub } from '@remix-run/testing';
-
-// const RemixStub = createRemixStub([
-//   {
-//     path: '/',
-//     Component: MyComponent,
-//     loader() {
-//       return json({ message: 'hello' });
-//     },
-//   },
-// ]);
 
 describe('LegislatorCard tests', () => {
   it('should properly render the component.', async () => {
