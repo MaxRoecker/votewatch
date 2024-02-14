@@ -39,6 +39,7 @@ const CardTitle = forwardRef<
 >((props, ref) => {
   const { className, ...rest } = props;
   return (
+    // eslint-disable-next-line jsx-a11y/heading-has-content
     <h3
       ref={ref}
       className={cn('font-semibold leading-none tracking-tight', className)}
