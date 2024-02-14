@@ -14,6 +14,8 @@ In terms of the web framework, I made a strategic decision to adopt Remix. This 
 
 The choice of server-side rendering was deliberate, driven by the belief that the application didn't necessitate the creation of JSON endpoints for data retrieval. This approach not only streamlines development but also future-proofs the application; any changes to the data source can be accommodated without requiring frontend modifications, as long as the schema remains consistent.
 
+I employed two types of testing: unit-tests and end-to-end tests. I used unit-tests for custom components, and make sure that the components are displaying the correct information. The end-to-end tests I used to check the entire "flow" of the application, testing navigation, UI changes and expected visibility of the components. I used vitest for the unit-tests and Playwright for the end-to-end tests.
+
 Finally, I employed TailwindCSS for styling, enabling efficient creation of visually appealing elements and reusable components. This decision enhances maintainability and scalability while reducing CSS-related overhead.
 
 Overall, my strategy focused on optimizing time complexity, minimizing effort costs, and leveraging appropriate technologies to ensure a robust and performant application.
