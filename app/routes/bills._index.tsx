@@ -6,7 +6,7 @@ import { Button } from '~/commons/components/button';
 import { Paginator } from '~/commons/components/paginator';
 import { useOutletContext } from '~/commons/utils/context';
 import { getIntl } from '~/commons/utils/intl';
-import { IntSearchParamParser } from '~/commons/utils/searchParams';
+import { IntSearchParamParser } from '~/commons/utils/search-params';
 import { findLegislatorsByIds } from '~/legislators/data';
 
 const pageParser = new IntSearchParamParser(1);
