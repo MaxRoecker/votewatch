@@ -5,7 +5,7 @@ import { findBillsByIds, findBillsBySponsorIds } from '~/bills/data';
 import { useOutletContext } from '~/commons/utils/context';
 import { getIntl } from '~/commons/utils/intl';
 import { findLegislatorsByIds } from '~/legislators/data';
-import { VoteResultCard } from '~/votes/components/vote-card';
+import { VoteResultCard } from '~/votes/components/vote-result-card';
 import { findVoteByIds, findVoteResultsByLegislatorIds } from '~/votes/data';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
