@@ -6,6 +6,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual",
+    "test": "vitest run",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
@@ -24,6 +25,7 @@
     "@remix-run/node": "^2.6.0",
     "@remix-run/react": "^2.6.0",
     "@remix-run/serve": "^2.6.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "csv-parse": "^5.5.3",
@@ -32,11 +34,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.6.2",
-    "tailwind-merge": "^1.14.0"
+    "tailwind-merge": "^1.14.0",
+    "vitest": "^1.2.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.41.2",
     "@remix-run/dev": "^2.6.0",
+    "@remix-run/testing": "^2.6.0",
+    "@testing-library/react": "^14.2.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -53,6 +58,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "ignore-sync": "^7.0.1",
+    "jsdom": "^24.0.0",
     "postcss": "^8.4.33",
     "prettier": "^3.1.1",
     "tailwindcss": "^3.4.1",
