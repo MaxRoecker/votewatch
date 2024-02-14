@@ -38,7 +38,10 @@ export const loader = ({ params }: LoaderFunctionArgs) => {
 export type Loader = typeof loader;
 
 export const links: LinksFunction = () => {
-  const links: Array<LinkDescriptor> = [{ rel: 'stylesheet', href: styles }];
+  const links: Array<LinkDescriptor> = [
+    { rel: 'stylesheet', href: styles },
+    { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+  ];
   if (cssBundleHref != null) {
     links.push({ rel: 'stylesheet', href: cssBundleHref });
   }
