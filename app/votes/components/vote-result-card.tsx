@@ -27,7 +27,12 @@ export const VoteResultCard = forwardRef<HTMLDivElement, VoteResultProps>(
     const intl = getIntl(locale);
 
     return (
-      <Card ref={ref} className={cn(className)} {...rest}>
+      <Card
+        ref={ref}
+        className={cn(className)}
+        data-testid="vote-result-card"
+        {...rest}
+      >
         <CardHeader className="flex flex-row items-center gap-4">
           <Avatar className="shrink-0">
             <AvatarFallback
@@ -36,12 +41,24 @@ export const VoteResultCard = forwardRef<HTMLDivElement, VoteResultProps>(
                 ['text-red-700']: voteResult.voteType !== 1,
               })}
             >
-              {voteResult.voteType === 1 ? <CheckCircle /> : <XCircle />}
+              {voteResult.voteType === 1 ? (
+                <CheckCircle data-testid="vote-result-card-approved" />
+              ) : (
+                <XCircle data-testid="vote-result-card-opposed" />
+              )}
             </AvatarFallback>
           </Avatar>
           <div className="grow">
-            <CardTitle className="line-clamp-2">{bill.title}</CardTitle>
-            <CardDescription className="truncate">
+            <CardTitle
+              className="line-clamp-2"
+              data-testid="vote-result-card-title"
+            >
+              {bill.title}
+            </CardTitle>
+            <CardDescription
+              className="truncate"
+              data-testid="vote-result-card-description"
+            >
               {intl.formatMessage({ id: 'On Vote' })} #{vote.id}
             </CardDescription>
           </div>
